@@ -43,8 +43,9 @@ with button_col2:
             zip_bytes = zip_buffer.getvalue()
             zip_filename = filename + ".zip" if not filename.endswith(".zip") else filename
 
-            # Metadata: attach certificate
-            metadata = [('certificate', certificate_bytes)]
+            # Metadata: attach certificate as base64-encoded string
+            certificate_utf8 = certificate_bytes.decode('utf-8')
+            metadata = [('certificate', certificate_utf8)]
             CHUNK_SIZE = 1024 * 1024  # 1 MB
 
             def generate_chunks(filename: str, data: bytes):
