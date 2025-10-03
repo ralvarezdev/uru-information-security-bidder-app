@@ -1,3 +1,4 @@
+import base64
 import io
 import zipfile
 
@@ -44,8 +45,11 @@ with button_col2:
             zip_filename = filename + ".zip" if not filename.endswith(".zip") else filename
 
             # Metadata: attach certificate as base64-encoded string
-            certificate_utf8 = certificate_bytes.decode('utf-8')
-            metadata = [('certificate', certificate_utf8)]
+            certificate_bytes = uploaded_certificate.getvalue()
+            certificate_b64 = base64.b64encode(certificate_bytes).decode(
+	            'ascii'
+	            )
+            metadata = [('certificate', certificate_b64)]
             CHUNK_SIZE = 1024 * 1024  # 1 MB
 
             def generate_chunks(filename: str, data: bytes):
