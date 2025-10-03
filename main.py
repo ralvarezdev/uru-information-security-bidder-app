@@ -1,17 +1,15 @@
-import streamlit as st
-import grpc
 import io
 import zipfile
+
+import streamlit as st
+import grpc
+
+from microservice.grpc import (
+	ENCRYPTER_GRPC_HOST,
+	ENCRYPTER_GRPC_PORT
+)
+from microservice.grpc.encrypter import create_grpc_client
 from ralvarezdev import encrypter_pb2, encrypter_pb2_grpc
-
-# gRPC Configuration
-ENCRYPTER_GRPC_HOST = "localhost"
-ENCRYPTER_GRPC_PORT = 50052
-
-def create_grpc_client(host: str, port: int):
-    channel = grpc.insecure_channel(f"{host}:{port}")
-    stub = encrypter_pb2_grpc.EncrypterStub(channel)
-    return stub
 
 # UI
 st.title("Bidder Client: Secure File Submission")
